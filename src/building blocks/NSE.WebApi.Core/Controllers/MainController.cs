@@ -14,7 +14,9 @@ namespace NSE.WebApi.Core.Controllers
         protected ActionResult CustomResponse(object result = null)
         {
             if (OperacaoValida())
+            {
                 return Ok(result);
+            }
 
             return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
             {
@@ -34,7 +36,7 @@ namespace NSE.WebApi.Core.Controllers
         }
 
         protected ActionResult CustomResponse(ValidationResult validationResult)
-        {            
+        {
             foreach (var erro in validationResult.Errors)
             {
                 AdicionarErroProcessamento(erro.ErrorMessage);
@@ -44,13 +46,18 @@ namespace NSE.WebApi.Core.Controllers
         }
 
         protected bool OperacaoValida()
-            => !Erros.Any();
+        {
+            return !Erros.Any();
+        }
 
         protected void AdicionarErroProcessamento(string erro)
-            => Erros.Add(erro);
+        {
+            Erros.Add(erro);
+        }
 
         protected void LimparErrosProcessamento()
-            => Erros.Clear();
-
+        {
+            Erros.Clear();
+        }
     }
 }

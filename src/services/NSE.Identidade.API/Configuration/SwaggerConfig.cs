@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using System;
 
 namespace NSE.Identidade.API.Configuration
 {
@@ -11,13 +11,14 @@ namespace NSE.Identidade.API.Configuration
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                c.SwaggerDoc("v1", new OpenApiInfo()
                 {
                     Title = "NerdStore Enterprise Identity API",
                     Description = "API do curso ASP.NET Core Enterprise Application",
                     Contact = new OpenApiContact() { Name = "Inácio Júnior", Email = "inaciojunior10@hotmail.com" },
                     License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licences/MIT") }
                 });
+
             });
 
             return services;

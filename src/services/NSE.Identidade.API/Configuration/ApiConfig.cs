@@ -16,7 +16,7 @@ namespace NSE.Identidade.API.Configuration
         }
 
         public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
-        {            
+        {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -26,7 +26,6 @@ namespace NSE.Identidade.API.Configuration
 
             app.UseRouting();
 
-            // Autorização e Autenticação deve ficar entre app.UseRouting() e app.UseEndpoints()
             app.UseAuthConfiguration();
 
             app.UseEndpoints(endpoints =>

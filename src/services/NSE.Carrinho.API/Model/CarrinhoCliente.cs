@@ -1,8 +1,8 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace NSE.Carrinho.API.Model
 {
@@ -40,7 +40,7 @@ namespace NSE.Carrinho.API.Model
         }
 
         internal void AdicionarItem(CarrinhoItem item)
-        {            
+        {
             item.AssociarCarrinho(Id);
 
             if (CarrinhoItemExistente(item))
@@ -57,7 +57,7 @@ namespace NSE.Carrinho.API.Model
         }
 
         internal void AtualizarItem(CarrinhoItem item)
-        {            
+        {
             item.AssociarCarrinho(Id);
 
             var itemExistente = ObterPorProdutoId(item.ProdutoId);
