@@ -1,6 +1,7 @@
 ﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using NSE.Core.Communication;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,14 +14,14 @@ namespace NSE.WebApi.Core.Controllers
 
         protected ActionResult CustomResponse(object result = null)
         {
-            if (OperacaoValida())
-            {
+            if (OperacaoValida())            
                 return Ok(result);
-            }
-
+            
             return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
             {
-                { "Mensagens", Erros.ToArray() }
+                { 
+                    "Mensagens", Erros.ToArray() 
+                }
             }));
         }
 
@@ -43,6 +44,25 @@ namespace NSE.WebApi.Core.Controllers
             }
 
             return CustomResponse();
+        }
+
+        protected ActionResult CustomResponse(ResponseResult resposta)
+        {
+            ResponsePossuiErros(resposta);
+            return CustomResponse();
+        }
+
+        protected bool ResponsePossuiErros(ResponseResult resposta)
+        {
+            if (resposta == null || !resposta.Errors.Mensagens.Any())
+                return false;
+
+            foreach (var mensagem in resposta.Errors.Mensagens)
+            {
+                AdicionarErroProcessamento(mensagem);
+            }
+
+            return true;
         }
 
         protected bool OperacaoValida()
